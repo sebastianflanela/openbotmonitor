@@ -24,7 +24,16 @@ import { faces } from '../data/faces';
         <div class="console-header"><label for="serial-log">Konsola urządzenia</label><span>115200 baud</span><button id="clear-log" type="button">Wyczyść</button></div>
         <pre id="serial-log" class="serial-log" tabindex="0" aria-label="Logi portu szeregowego">Logi pojawią się po podłączeniu urządzenia.</pre>
         <p class="console-note">Logi są widoczne tylko w tej karcie przeglądarki. Otwarcie portu może zrestartować płytkę.</p>
-        <div class="firmware-notice"><span class="notice-icon" aria-hidden="true">i</span><div><h3>Firmware w przygotowaniu</h3><p>Połączenie USB i konsola są dostępne. Wgrywanie oraz zapis ustawień Wi‑Fi i czołówki udostępnimy po testach czystego wydania na urządzeniu.</p></div></div>
+        <form id="device-config" class="device-config">
+          <div><p class="eyebrow">Konfiguracja ESP32</p><h3>Połącz monitor z OpenBotem</h3><p>Ustawienia trafią bezpośrednio przewodem USB do ESP32. Strona ich nie zapisuje ani nie wysyła na serwer.</p></div>
+          <label for="wifi-ssid">Nazwa sieci Wi‑Fi</label><input id="wifi-ssid" name="ssid" maxlength="32" autocomplete="off" required>
+          <label for="wifi-password">Hasło Wi‑Fi</label><input id="wifi-password" name="password" type="password" maxlength="63" autocomplete="new-password">
+          <label for="bridge-url">Adres lokalnego bridge’a</label><input id="bridge-url" name="bridge_url" type="url" placeholder="http://192.168.1.20:8765/api/status" maxlength="192" required>
+          <label for="bridge-token">Token bridge’a</label><input id="bridge-token" name="bridge_token" type="password" minlength="32" maxlength="128" autocomplete="new-password" required>
+          <button id="save-config" class="button secondary" type="submit" disabled>Wyślij ustawienia przez USB</button>
+          <p id="config-status" class="config-status" role="status" aria-live="polite">Połącz ESP32 i poczekaj na komunikat gotowości firmware’u.</p>
+        </form>
+        <div class="firmware-notice"><span class="notice-icon" aria-hidden="true">i</span><div><h3>Wgrywanie firmware’u w przygotowaniu</h3><p>Instalator udostępnimy po testach wydania na docelowym ESP32. Formularz ustawień odblokuje się tylko wtedy, gdy podłączone firmware zgłosi gotowość do konfiguracji.</p></div></div>
         <details class="usb-help"><summary>Nie widzę swojego ESP32 na liście</summary><ul><li>Sprawdź kabel USB z transmisją danych i spróbuj innego portu.</li><li>Sprawdź, czy system wykrywa port płytki. Mostek USB–UART może wymagać sterownika.</li><li>Zamknij programy korzystające z portu szeregowego.</li><li>Użyj Chrome lub Edge na komputerze. Port wybierzesz po kliknięciu przycisku.</li></ul></details>
       </section>
     </div>
@@ -32,3 +41,4 @@ import { faces } from '../data/faces';
   </main>
   <script src="../scripts/usb.ts"></script>
 </Layout>
+
