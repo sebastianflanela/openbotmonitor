@@ -188,6 +188,57 @@
   line-height: 1.7;
   color: #93859f;
 }
+.device-config {
+  display: grid;
+  gap: 10px;
+  margin-top: 24px;
+  padding: 18px;
+  border: 1px solid #3a3343;
+  border-radius: 10px;
+  background: #17151b;
+}
+.device-config > div p:last-child {
+  margin-top: 7px;
+  color: #a99eb6;
+  font-size: 13px;
+  line-height: 1.7;
+}
+.device-config h3 {
+  margin-top: 6px;
+  color: #e8dcef;
+  font-size: 17px;
+  font-weight: 500;
+}
+.device-config > label {
+  margin-top: 6px;
+  color: #c7bbd4;
+  font-size: 12px;
+}
+.device-config input {
+  width: 100%;
+  min-height: 42px;
+  padding: 10px 12px;
+  border: 1px solid #494052;
+  border-radius: 7px;
+  background: #211e27;
+  color: #f2edf5;
+  font: inherit;
+  font-size: 13px;
+}
+.device-config input:focus-visible {
+  outline: 2px solid #b78adb;
+  outline-offset: 2px;
+}
+.device-config button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.config-status {
+  min-height: 38px;
+  color: #aaa0b7;
+  font-size: 12px;
+  line-height: 1.7;
+}
 .firmware-notice {
   display: flex;
   gap: 13px;
@@ -272,3 +323,4 @@
     padding-top: 40px;
   }
 }
+
