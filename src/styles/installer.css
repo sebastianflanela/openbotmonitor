@@ -1,0 +1,274 @@
+.installer {
+  padding-top: 34px;
+}
+.back-link {
+  font-size: 13px;
+  color: #a59bb1;
+}
+.back-link:hover {
+  color: #dbc9ed;
+}
+.installer-heading {
+  margin-top: 38px;
+}
+.installer-heading h1 {
+  font-size: 57px;
+  letter-spacing: -2.7px;
+  line-height: 1.12;
+  font-weight: 500;
+  margin-top: 16px;
+}
+.installer-heading h1 span {
+  color: #bcb2c9;
+}
+.installer-heading > p:last-child {
+  font-size: 15px;
+  line-height: 1.8;
+  color: #aaa0b7;
+  margin-top: 19px;
+}
+.installer-grid {
+  display: grid;
+  grid-template-columns: 0.85fr 1.15fr;
+  gap: 30px;
+  align-items: start;
+  margin-top: 40px;
+}
+.selected-panel {
+  padding: 26px;
+  background: #201d26;
+  border: 1px solid #393140;
+  border-radius: 15px;
+}
+.selected-preview {
+  display: flex;
+  justify-content: center;
+  padding: 4px 0 28px;
+}
+.selected-panel > label {
+  display: block;
+  font-size: 13px;
+  margin-bottom: 10px;
+  color: #c1b7ce;
+}
+.selected-panel select {
+  width: 100%;
+  color: #ece5f4;
+  background: #2b2533;
+  border: 1px solid #51445f;
+  padding: 13px 36px 13px 13px;
+  border-radius: 8px;
+  font-size: 13px;
+  appearance: none;
+  background-image:
+    linear-gradient(45deg, transparent 50%, #c8b5d9 50%),
+    linear-gradient(135deg, #c8b5d9 50%, transparent 50%);
+  background-position:
+    calc(100% - 19px) 19px,
+    calc(100% - 15px) 19px;
+  background-size: 4px 4px;
+  background-repeat: no-repeat;
+}
+.selected-panel > #face-description {
+  font-size: 13px;
+  line-height: 1.8;
+  color: #aaa0b7;
+  margin-top: 15px;
+}
+.selected-spec {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  padding-top: 22px;
+  margin-top: 22px;
+  border-top: 1px solid #38303f;
+  color: #c5b9d1;
+  font-size: 13px;
+}
+.selected-panel > .small-note {
+  font-size: 13px;
+  line-height: 1.9;
+  color: #998ca7;
+  margin-top: 16px;
+}
+.usb-panel {
+  padding: 28px;
+  background: #1d1c22;
+  border: 1px solid #37303f;
+  border-radius: 15px;
+}
+.usb-panel-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+}
+.usb-panel h2 {
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: -0.6px;
+}
+.connection-badge {
+  font-size: 13px;
+  padding: 7px 10px;
+  border-radius: 20px;
+  background: #302936;
+  color: #b6a4c5;
+  white-space: nowrap;
+}
+.connection-badge.connected {
+  color: #91dbb6;
+  background: #21362c;
+}
+.usb-intro {
+  font-size: 13px;
+  line-height: 1.8;
+  color: #a99eb6;
+  margin-top: 18px;
+}
+.usb-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 23px;
+}
+.usb-actions .button {
+  font-size: 13px;
+  padding: 13px 20px;
+}
+.usb-actions .button:disabled {
+  opacity: 0.45;
+  transform: none;
+}
+.usb-status {
+  font-size: 13px;
+  line-height: 1.8;
+  color: #c3b6d2;
+  margin-top: 16px;
+  min-height: 44px;
+}
+.console-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 13px;
+  color: #9f93ad;
+  margin-top: 22px;
+}
+.console-header label {
+  color: #c7bbd4;
+}
+.console-header button {
+  margin-left: auto;
+  font-size: 13px;
+  background: none;
+  border: 0;
+  color: #bca4d1;
+  padding: 5px;
+}
+.console-header button:hover {
+  color: #eee0fa;
+}
+.serial-log {
+  height: 180px;
+  overflow: auto;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  background: #111015;
+  border: 1px solid #352c3c;
+  border-radius: 8px;
+  padding: 14px;
+  color: #bdb5cb;
+  font:
+    13px/1.8 ui-monospace,
+    monospace;
+  margin: 10px 0;
+}
+.console-note {
+  font-size: 13px;
+  line-height: 1.7;
+  color: #93859f;
+}
+.firmware-notice {
+  display: flex;
+  gap: 13px;
+  margin-top: 25px;
+  padding: 16px;
+  background: #292330;
+  border-radius: 8px;
+}
+.notice-icon {
+  font-family: Georgia, serif;
+  border: 1px solid #9077a6;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  text-align: center;
+  font-size: 13px;
+  color: #c1a4d7;
+}
+.firmware-notice h3 {
+  font-size: 13px;
+  font-weight: 550;
+  color: #dcc8eb;
+}
+.firmware-notice p {
+  font-size: 13px;
+  line-height: 1.8;
+  color: #b3a1c3;
+  margin-top: 7px;
+}
+.usb-help {
+  margin-top: 24px;
+  font-size: 13px;
+}
+.usb-help summary {
+  cursor: pointer;
+  color: #c8b4d9;
+}
+.usb-help ul {
+  padding-left: 18px;
+  color: #ad9abc;
+  line-height: 1.9;
+  margin-bottom: 0;
+}
+.bridge-explanation {
+  max-width: 680px;
+  padding-top: 60px;
+}
+.bridge-explanation h2 {
+  font-size: 24px;
+  font-weight: 500;
+  letter-spacing: -0.6px;
+}
+.bridge-explanation p {
+  font-size: 14px;
+  line-height: 1.9;
+  color: #a89bb5;
+  margin-top: 17px;
+}
+@media (max-width: 800px) {
+  .installer-heading h1 {
+    font-size: 44px;
+    letter-spacing: -1.7px;
+  }
+  .installer-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .selected-panel {
+    padding: 22px;
+  }
+  .selected-preview .device {
+    max-width: 320px;
+  }
+  .usb-panel {
+    padding: 22px;
+  }
+  .usb-panel h2 {
+    font-size: 20px;
+  }
+  .bridge-explanation {
+    padding-top: 40px;
+  }
+}

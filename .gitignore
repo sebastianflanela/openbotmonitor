@@ -1,0 +1,25 @@
+# Local build output
+node_modules/
+dist/
+.astro/
+.pio-core/
+**/.pio/
+
+# Local credentials and configuration
+.private/
+.env
+.env.*
+!.env.example
+**/secrets.h
+*.credential.xml
+
+# Non-website project material kept in this workspace
+/bridge/
+/firmware-dev/
+/tools/
+/PLAN-PROJEKTU.md
+/CHECKLISTA-INSTALATOR-ESP32.md
+/ZAPISZ-DOSTEP-HOSTING.ps1
+/ZAPISZ-HASLO.cmd
+/podglad-*.jpg
+/public/assets/new-agent-sheet-*

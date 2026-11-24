@@ -1,0 +1,34 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Device from '../components/Device.astro';
+import { faces } from '../data/faces';
+---
+<Layout title="Połącz ESP32 przez USB — OpenBot Monitor">
+  <main id="main" class="installer wrap">
+    <a class="back-link" href="/#czolowki">‹ Wróć do czołówek</a>
+    <div class="installer-heading"><p class="eyebrow">Połączenie z urządzeniem</p><h1>Twój monitor.<br /><span>Zacznij od USB.</span></h1><p>Podłącz ESP32 kablem z transmisją danych.<br />Połączenie otwierasz bezpośrednio w przeglądarce.</p></div>
+    <div class="installer-grid">
+      <aside class="selected-panel">
+        <div class="selected-preview"><Device face="hero" interactive label="Podgląd wybranej czołówki" /></div>
+        <label for="face-select">Twoja czołówka</label>
+        <select id="face-select">{faces.map(face => <option value={face.id}>{face.name} — {face.label}</option>)}</select>
+        <p id="face-description">Jeden agent na całym ekranie. Kolejny co 5 sekund.</p>
+        <div class="selected-spec"><span>ESP32 Dev Module</span><span>ILI9341 · 320 × 240</span></div>
+        <p class="small-note">Podgląd na przykładowych danych. Wybór na tej stronie będzie przekazany urządzeniu w gotowym kreatorze konfiguracji.</p>
+      </aside>
+      <section class="usb-panel" aria-labelledby="usb-heading">
+        <div class="usb-panel-top"><h2 id="usb-heading">Połącz urządzenie</h2><span id="connection-badge" class="connection-badge">Rozłączono</span></div>
+        <p class="usb-intro">Użyj Chrome lub Edge na komputerze. Zamknij monitor szeregowy w Arduino IDE lub PlatformIO, jeśli korzysta z tego samego portu.</p>
+        <div class="usb-actions"><button id="connect-usb" class="button primary">Wybierz port USB</button><button id="disconnect-usb" class="button secondary" hidden>Rozłącz</button></div>
+        <p id="usb-status" class="usb-status" role="status" aria-live="polite">Gotowy do połączenia. Przeglądarka poprosi o wskazanie portu Twojego ESP32.</p>
+        <div class="console-header"><label for="serial-log">Konsola urządzenia</label><span>115200 baud</span><button id="clear-log" type="button">Wyczyść</button></div>
+        <pre id="serial-log" class="serial-log" tabindex="0" aria-label="Logi portu szeregowego">Logi pojawią się po podłączeniu urządzenia.</pre>
+        <p class="console-note">Logi są widoczne tylko w tej karcie przeglądarki. Otwarcie portu może zrestartować płytkę.</p>
+        <div class="firmware-notice"><span class="notice-icon" aria-hidden="true">i</span><div><h3>Firmware w przygotowaniu</h3><p>Połączenie USB i konsola są dostępne. Wgrywanie oraz zapis ustawień Wi‑Fi i czołówki udostępnimy po testach czystego wydania na urządzeniu.</p></div></div>
+        <details class="usb-help"><summary>Nie widzę swojego ESP32 na liście</summary><ul><li>Sprawdź kabel USB z transmisją danych i spróbuj innego portu.</li><li>Sprawdź, czy system wykrywa port płytki. Mostek USB–UART może wymagać sterownika.</li><li>Zamknij programy korzystające z portu szeregowego.</li><li>Użyj Chrome lub Edge na komputerze. Port wybierzesz po kliknięciu przycisku.</li></ul></details>
+      </section>
+    </div>
+    <section class="bridge-explanation"><h2>Co dalej po USB?</h2><p>Po wgraniu docelowego firmware’u skonfigurujesz Wi‑Fi i lokalny bridge. Bridge działa przy Twoim OpenBocie, a ESP32 pobiera z niego statusy przez sieć lokalną. Monitor potrzebuje potem zasilania, działającego bridge’a i połączenia Wi‑Fi.</p></section>
+  </main>
+  <script src="../scripts/usb.ts"></script>
+</Layout>

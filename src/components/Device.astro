@@ -1,0 +1,22 @@
+---
+const { face = 'hero', class: className = '', label = 'Podgląd czołówki', featured = false, interactive = false, demo = false } = Astro.props;
+---
+<div class:list={['device', className, { featured }]}>
+  <div class="device-top"><span>OPENBOT MONITOR</span><span class="device-led"></span></div>
+  <div class="lcd-bezel" data-interactive={interactive || undefined} data-demo={demo || undefined}>
+    <div class="screen-content">
+    <canvas width="640" height="480" data-face={face} role="img" aria-label={label}></canvas>
+    {featured && <div class="featured-statuses" data-featured-statuses></div>}
+    {(interactive || demo) && <>
+      <div class="screen-targets" aria-label="Wybierz agenta, aby zobaczyć zadania"></div>
+      <section class="screen-tasks" hidden aria-label="Zadania agenta">
+        <header><button class="task-back" type="button">‹ Powrót</button><strong class="task-agent-name"></strong></header>
+        <div class="task-current"><span class="task-status-label"></span><p class="task-current-title"></p><p class="task-detail"></p></div>
+        <div class="task-queue"><span>W kolejce <b class="task-count"></b></span><ul></ul></div>
+      </section>
+      <span class="demo-touch" aria-hidden="true" hidden></span>
+    </>}
+    </div>
+  </div>
+  <div class="device-bottom"><span>ESP32 <b>·</b> ILI9341</span><span class="port" aria-hidden="true"></span><span>USB</span></div>
+</div>

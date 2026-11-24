@@ -1,0 +1,108 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Device from '../components/Device.astro';
+import { faces } from '../data/faces';
+---
+<Layout>
+  <main id="main">
+    <section class="hero wrap">
+      <div class="hero-halo" aria-hidden="true"></div>
+      <p class="eyebrow"><span class="live-dot"></span> OpenBot na osobnym ekranie</p>
+      <h1>Twój zespół.<br /><span>Na Twoim biurku.</span></h1>
+      <p class="hero-copy">Mały ekran. Cały zespół agentów.<br class="desktop-break" /> Zobacz, kto pracuje, wybierz swój wygląd i podłącz ESP32.</p>
+      <div class="hero-actions">
+        <a href="#czolowki" class="button primary">Wybierz czołówkę <span aria-hidden="true">↓</span></a>
+        <a href="/instaluj/" class="button secondary">Połącz przez USB</a>
+      </div>
+      <div class="hero-product">
+        <div class="product-side side-left"><span class="line"></span><p>Statusy agentów<br /><strong>na żywo</strong></p></div>
+        <Device face="hero" featured interactive demo label="Dotykowa demonstracja Solo i Duetu. Kliknij agenta, aby zobaczyć jego pracę." />
+        <div class="product-side side-right"><span class="line"></span><p>Twoje ESP32.<br /><strong>Twój OpenBot.</strong></p></div>
+        <div class="device-shadow" aria-hidden="true"></div>
+      </div>
+      <p class="preview-caption">Dotknij agenta i zobacz jego zadania · automatyczna demonstracja Solo i Duetu · przykładowe dane</p>
+    </section>
+
+    <section id="czolowki" class="gallery-section wrap">
+      <div class="section-intro">
+        <div><p class="eyebrow">Wybierz swój widok</p><h2>Jeden ekran.<br />Siedemnaście czołówek.</h2></div>
+        <p>Dziewięć widoków jednego agenta, duet czy cały zespół?<br />Kliknij czołówkę i zobacz ją z bliska.</p>
+      </div>
+      <div class="gallery-tools">
+        <div class="filters" role="group" aria-label="Filtruj czołówki">
+          <button class="active" data-filter="all" aria-pressed="true">Wszystkie <span>17</span></button>
+          <button data-filter="focus" aria-pressed="false">Jeden agent</button>
+          <button data-filter="team" aria-pressed="false">Zespół</button>
+          <button data-filter="ambient" aria-pressed="false">Ambient</button>
+        </div>
+        <span class="gallery-note">Animowane podglądy</span>
+      </div>
+      <div class="face-grid">
+        {faces.map(face => (
+          <article class="face-card" data-group={face.group}>
+            <div class={`card-stage stage-${face.id}`}><Device face={face.id} interactive demo={face.id === 'hero' || face.id === 'duo'} label={`Dotykowy podgląd ${face.name}`} /></div>
+            <button class="card-info" data-preview={face.id} aria-label={`Powiększ czołówkę ${face.name}`}><span><span class="card-title">{face.name}</span><span class="card-subtitle">Dotknij agenta · zadania</span></span><span class="card-open" aria-hidden="true">+</span></button>
+          </article>
+        ))}
+      </div>
+      <p class="gallery-footnote">Galeria koncepcji. Wgrywanie udostępnimy po testach czystego wydania firmware’u na urządzeniu.</p>
+    </section>
+
+    <section id="jak-to-dziala" class="how-section wrap">
+      <div class="section-intro"><div><p class="eyebrow">Od przeglądarki do biurka</p><h2>Podłącz. Wybierz.<br />Miej ich na oku.</h2></div><a href="/instaluj/" class="button secondary">Otwórz połączenie USB</a></div>
+      <div class="steps">
+        <article><span class="step-symbol" aria-hidden="true">⌁</span><h3>Podłącz ESP32</h3><p>Kabel USB z transmisją danych. Chrome lub Edge na komputerze. Przeglądarka poprosi Cię o wybranie portu.</p></article>
+        <article><span class="step-symbol" aria-hidden="true">▦</span><h3>Wybierz czołówkę</h3><p>Znajdź swój układ. Wygląd ekranu i ustawienia rotacji będą zapisane na urządzeniu.</p></article>
+        <article><span class="step-symbol" aria-hidden="true">◉</span><h3>Połącz z OpenBotem</h3><p>Lokalny bridge na Twoim komputerze przekazuje statusy agentów do ESP32 przez Twoją sieć Wi‑Fi.</p></article>
+      </div>
+    </section>
+
+    <section id="sprzet" class="hardware-section wrap">
+      <div><p class="eyebrow">Pierwszy profil sprzętowy</p><h2>Masz ten zestaw?<br />Zaczynamy od niego.</h2><p class="muted">Pierwsze wydanie przygotowujemy dla zestawu<br />używanego w oryginalnym projekcie monitora.</p></div>
+      <div class="spec-panel"><div><span>Płytka</span><strong>ESP32 Dev Module</strong></div><div><span>Wyświetlacz</span><strong>ILI9341 · SPI</strong></div><div><span>Orientacja</span><strong>320 × 240 · poziomo</strong></div><div><span>Instalacja</span><strong>USB · przeglądarka</strong></div><p>Schemat pinów i zgodność konkretnej płytki potwierdzimy przed udostępnieniem firmware’u.</p></div>
+    </section>
+
+    <section class="faq-section wrap"><h2>Dobrze wiedzieć</h2><div class="faq-list">
+      <details><summary>Czy monitor działa po odłączeniu od komputera?</summary><p>Po konfiguracji ESP32 pobiera statusy przez Wi‑Fi. Potrzebuje zasilania i działającego bridge’a na komputerze, na którym pracuje OpenBot.</p></details>
+      <details><summary>Gdzie trafiają moje dane Wi‑Fi?</summary><p>Docelowy kreator zapisze je lokalnie na Twoim ESP32 przez USB. Podgląd strony nie zbiera danych Wi‑Fi. Pierwsza wersja kreatora udostępnia połączenie i konsolę USB.</p></details>
+      <details><summary>Czy mogę wyświetlić więcej niż czterech agentów?</summary><p>Projekt przewiduje kolejne strony i automatyczną rotację. Liczba agentów w zespole będzie oddzielona od liczby miejsc widocznych jednocześnie na ekranie.</p></details>
+      <details><summary>Czy mogę już wgrać firmware?</summary><p>Obecnie możesz wybrać czołówkę oraz sprawdzić połączenie i logi USB. Czysty pakiet do instalacji pojawi się po testach firmware’u i konfiguracji urządzenia.</p></details>
+    </div></section>
+  </main>
+  <dialog id="face-dialog" class="face-dialog" aria-labelledby="preview-title">
+    <button class="dialog-close" aria-label="Zamknij podgląd">×</button>
+    <div class="dialog-stage"><Device face="hero" interactive class="preview-device" /></div>
+    <div class="dialog-content"><p class="eyebrow">Podgląd czołówki</p><h2 id="preview-title">Solo</h2><p id="preview-description"></p><a id="preview-select" class="button primary" href="/instaluj/?face=hero">Wybierz i przejdź do USB</a><p class="small-note">Firmware w przygotowaniu</p></div>
+  </dialog>
+  <script>
+    import { faces } from '../data/faces';
+    const dialog = document.querySelector<HTMLDialogElement>('#face-dialog')!;
+    document.querySelectorAll<HTMLButtonElement>('[data-preview]').forEach(button => {
+      button.addEventListener('click', () => {
+        const face = faces.find(item => item.id === button.dataset.preview)!;
+        dialog.querySelector('canvas')!.dataset.face = face.id;
+        document.querySelector('#preview-title')!.textContent = face.name;
+        document.querySelector('#preview-description')!.textContent = face.description;
+        document.querySelector<HTMLAnchorElement>('#preview-select')!.href = `/instaluj/?face=${face.id}`;
+        dialog.showModal();
+        document.documentElement.classList.add('preview-open');
+      });
+    });
+    document.querySelector('.dialog-close')!.addEventListener('click', () => dialog.close());
+    dialog.addEventListener('close', () => {
+      document.documentElement.classList.remove('preview-open');
+    });
+    dialog.addEventListener('click', event => { if (event.target === dialog) dialog.close(); });
+    document.querySelectorAll<HTMLButtonElement>('[data-filter]').forEach(button => {
+      button.addEventListener('click', () => {
+        document.querySelectorAll('[data-filter]').forEach(item => {
+          item.classList.toggle('active', item === button);
+          item.setAttribute('aria-pressed', String(item === button));
+        });
+        document.querySelectorAll<HTMLElement>('.face-card').forEach(card => {
+          card.hidden = button.dataset.filter !== 'all' && card.dataset.group !== button.dataset.filter;
+        });
+      });
+    });
+  </script>
+</Layout>
