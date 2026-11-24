@@ -118,6 +118,19 @@ async function readLogs(activePort: SerialPort) {
   }
 }
 
+async function requestDeviceReady(activePort: SerialPort) {
+  if (!activePort.writable) return;
+  let writer: WritableStreamDefaultWriter<Uint8Array> | null = null;
+  try {
+    writer = activePort.writable.getWriter();
+    await writer.write(new TextEncoder().encode('{"command":"hello"}\n'));
+  } catch {
+    configStatus.textContent = "Nie udało się sprawdzić firmware’u przez USB.";
+  } finally {
+    writer?.releaseLock();
+  }
+}
+
 async function disconnect() {
   if (!port || disconnecting) return;
   disconnecting = true;
@@ -167,6 +180,7 @@ if (!window.isSecureContext || !serial) {
       status.textContent =
         "Port USB otwarty. Oczekiwanie na logi urządzenia. Wgrywanie firmware’u jest jeszcze w przygotowaniu.";
       readTask = readLogs(selectedPort);
+      void requestDeviceReady(selectedPort);
     } catch (error) {
       if (selectedPort) {
         try {
