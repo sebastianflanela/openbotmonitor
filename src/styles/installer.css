@@ -75,6 +75,18 @@
   color: #aaa0b7;
   margin-top: 15px;
 }
+.selected-panel > #save-face {
+  width: 100%;
+  margin-top: 10px;
+}
+.selected-panel > #save-face:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.selected-panel > #face-status {
+  min-height: 36px;
+  margin: 8px 0 0;
+}
 .selected-spec {
   display: flex;
   flex-wrap: wrap;
