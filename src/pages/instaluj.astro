@@ -13,6 +13,8 @@ import { faces } from '../data/faces';
         <label for="face-select">Twoja czołówka</label>
         <select id="face-select">{faces.map(face => <option value={face.id}>{face.name} — {face.label}</option>)}</select>
         <p id="face-description">Jeden agent na całym ekranie. Kolejny co 5 sekund.</p>
+        <button id="save-face" class="button secondary" type="button" disabled>Zapisz czołówkę w ESP32</button>
+        <p id="face-status" class="config-status" role="status" aria-live="polite">Połącz urządzenie przez USB, aby zapisać wybrany widok.</p>
         <div class="selected-spec"><span>ESP32 Dev Module</span><span>ILI9341 · 320 × 240</span></div>
         <p class="small-note">Podgląd na przykładowych danych. Wybór na tej stronie będzie przekazany urządzeniu w gotowym kreatorze konfiguracji.</p>
       </aside>
