@@ -19,6 +19,8 @@ const status = document.querySelector<HTMLElement>("#usb-status")!;
 const badge = document.querySelector<HTMLElement>("#connection-badge")!;
 const log = document.querySelector<HTMLElement>("#serial-log")!;
 const select = document.querySelector<HTMLSelectElement>("#face-select")!;
+const saveFaceButton = document.querySelector<HTMLButtonElement>("#save-face")!;
+const faceStatus = document.querySelector<HTMLElement>("#face-status")!;
 const configForm = document.querySelector<HTMLFormElement>("#device-config")!;
 const saveConfigButton = document.querySelector<HTMLButtonElement>("#save-config")!;
 const configStatus = document.querySelector<HTMLElement>("#config-status")!;
@@ -37,6 +39,8 @@ function updateFace(id: string) {
     ".selected-preview canvas",
   )!.dataset.face = face.id;
   document.querySelector("#face-description")!.textContent = face.description;
+  saveFaceButton.disabled = !port || !firmwareReady;
+  faceStatus.textContent = `Wybrano: ${face.name}. Połącz USB, aby zapisać ten widok w ESP32.`;
   const url = new URL(window.location.href);
   url.searchParams.set("face", face.id);
   window.history.replaceState(null, "", url);
@@ -54,6 +58,8 @@ function setConnected(connected: boolean) {
     firmwareReady = false;
     protocolBuffer = "";
     saveConfigButton.disabled = true;
+    saveFaceButton.disabled = true;
+    faceStatus.textContent = "Połącz urządzenie przez USB, aby zapisać wybrany widok.";
     configStatus.textContent = "Połącz ESP32 i poczekaj na komunikat gotowości firmware’u.";
   } else {
     configStatus.textContent = "Czekam na firmware obsługujące konfigurację USB…";
@@ -68,12 +74,25 @@ function addLog(value: string) {
     firmwareReady = true;
     configStatus.textContent = "Firmware gotowe. Ustawienia wyślesz bezpośrednio przez USB.";
     saveConfigButton.disabled = !port;
+    saveFaceButton.disabled = !port;
+    faceStatus.textContent = "Firmware gotowe. Możesz zapisać wybraną czołówkę bez ponownego podawania Wi‑Fi.";
   }
   if (protocolBuffer.includes("CONFIG_OK")) {
     configStatus.textContent = "Ustawienia zapisane w ESP32. Urządzenie łączy się z Wi‑Fi.";
     saveConfigButton.disabled = !port;
+    saveFaceButton.disabled = true;
+    faceStatus.textContent = `Zapisano w ESP32: ${faces.find((face) => face.id === select.value)?.name || select.value}.`;
     configForm.querySelector<HTMLInputElement>("#wifi-password")!.value = "";
     configForm.querySelector<HTMLInputElement>("#bridge-token")!.value = "";
+  }
+  if (protocolBuffer.includes("FACE_OK")) {
+    saveFaceButton.disabled = true;
+    faceStatus.textContent = `Zapisano w ESP32: ${faces.find((face) => face.id === select.value)?.name || select.value}.`;
+  }
+  const faceError = protocolBuffer.match(/FACE_ERROR:([a-z_]+)/);
+  if (faceError) {
+    faceStatus.textContent = `Nie udało się zapisać czołówki (${faceError[1]}).`;
+    saveFaceButton.disabled = !port || !firmwareReady;
   }
   const configError = protocolBuffer.match(/CONFIG_ERROR:([a-z_]+)/);
   if (configError) {
@@ -117,6 +136,25 @@ async function readLogs(activePort: SerialPort) {
     }
   }
 }
+
+saveFaceButton.addEventListener("click", async () => {
+  if (!port?.writable || !firmwareReady) return;
+  const faceId = select.value;
+  saveFaceButton.disabled = true;
+  faceStatus.textContent = "Zapisuję wybraną czołówkę w ESP32…";
+  protocolBuffer = "";
+  let writer: WritableStreamDefaultWriter<Uint8Array> | null = null;
+  try {
+    writer = port.writable.getWriter();
+    const command = JSON.stringify({ command: "set_face", face_id: faceId }) + "\n";
+    await writer.write(new TextEncoder().encode(command));
+  } catch {
+    faceStatus.textContent = "Nie udało się wysłać wyboru przez USB.";
+    saveFaceButton.disabled = !port || !firmwareReady;
+  } finally {
+    writer?.releaseLock();
+  }
+});
 
 async function requestDeviceReady(activePort: SerialPort) {
   if (!activePort.writable) return;
@@ -223,6 +261,7 @@ configForm.addEventListener("submit", async (event) => {
 
   const payload = JSON.stringify({
     command: "configure",
+    face_id: select.value,
     ssid,
     password,
     bridge_url: bridgeUrl.href,
